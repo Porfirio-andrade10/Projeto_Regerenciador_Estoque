@@ -89,3 +89,129 @@ INSERT INTO auditoria_estoque(
 	'alimentos_nao_pereciveis','delete',
     OLD.unidade_medida, OLD.nome, OLD.custo, OLD.quantidade_estoque, OLD.data_validade
     );
+
+
+-- carne
+
+CREATE TRIGGER carne_update
+AFTER UPDATE ON carne
+FOR EACH ROW
+INSERT INTO auditoria_estoque (
+    tabela_nome, operacao, unidade_medida_antiga, nome_antigo, custo_antigo, quantidade_estoque_antigo, 
+    data_validade_antigo, 
+    unidade_medida_nova, nome_novo, custo_novo, quantidade_estoque_novo,
+    data_validade_novo
+) VALUES (
+    'carne', 'UPDATE', OLD.unidade_medida, OLD.nome, OLD.custo, OLD.quantidade_estoque, 
+    OLD.data_validade, 
+    NEW.unidade_medida, NEW.nome, NEW.custo, NEW.quantidade_estoque,
+    NEW.data_validade
+);
+
+CREATE TRIGGER carne_insert
+AFTER  INSERT ON carne
+FOR EACH ROW
+INSERT INTO auditoria_estoque (
+	tabela_nome, operacao,
+    unidade_medida_nova, nome_novo, custo_novo, quantidade_estoque_novo, 
+    data_validade_novo
+)VALUES(
+	'carne', 'insert',
+	NEW.unidade_medida, NEW.nome, NEW.custo, NEW.quantidade_estoque,
+    NEW.data_validade
+);
+
+CREATE TRIGGER carne_delete
+BEFORE DELETE ON carne
+FOR EACH ROW
+INSERT INTO auditoria_estoque(
+	tabela_nome, operacao, 
+    unidade_medida_antiga, nome_antigo, custo_antigo, quantidade_estoque_antigo, 
+    data_validade_antigo
+)VALUES(
+	'carne','delete',
+    OLD.unidade_medida, OLD.nome, OLD.custo, OLD.quantidade_estoque, 
+	OLD.data_validade
+    );
+    
+-- hortifruti
+
+CREATE TRIGGER hortifruti_update
+AFTER UPDATE ON hortifruti
+FOR EACH ROW
+INSERT INTO auditoria_estoque (
+    tabela_nome, operacao, unidade_medida_antiga, nome_antigo, custo_antigo, quantidade_estoque_antigo, 
+    data_validade_antigo, 
+    unidade_medida_nova, nome_novo, custo_novo, quantidade_estoque_novo, 
+    data_validade_novo
+) VALUES (
+    'hortifruti', 'UPDATE', OLD.unidade_medida, OLD.nome, OLD.custo, OLD.quantidade_estoque, 
+    OLD.data_validade, 
+    NEW.unidade_medida, NEW.nome, NEW.custo, NEW.quantidade_estoque,
+    NEW.data_validade
+);
+
+CREATE TRIGGER hortifruti_insert
+AFTER  INSERT ON hortifruti
+FOR EACH ROW
+INSERT INTO auditoria_estoque (
+	tabela_nome, operacao,
+    unidade_medida_nova, nome_novo, custo_novo, quantidade_estoque_novo,
+    data_validade_novo
+)VALUES(
+	'hortifruti', 'insert',
+	NEW.unidade_medida, NEW.nome, NEW.custo, NEW.quantidade_estoque,
+    NEW.data_validade
+);
+
+CREATE TRIGGER hortifruti_delete
+BEFORE DELETE ON hortifruti
+FOR EACH ROW
+INSERT INTO auditoria_estoque(
+	tabela_nome, operacao, 
+    unidade_medida_antiga, nome_antigo, custo_antigo, quantidade_estoque_antigo, 
+	data_validade_antigo
+)VALUES(
+	'hortifruti','delete',
+    OLD.unidade_medida, OLD.nome, OLD.custo, OLD.quantidade_estoque, 
+    OLD.data_validade
+    );
+    
+-- descartaveis
+
+CREATE TRIGGER descartaveis_update
+AFTER UPDATE ON descartaveis
+FOR EACH ROW 
+INSERT INTO auditoria_estoque (
+    tabela_nome, operacao, unidade_medida_antiga, nome_antigo, custo_antigo, quantidade_estoque_antigo, 
+    data_validade_antigo, 
+    unidade_medida_nova, nome_novo, custo_novo, quantidade_estoque_novo
+) VALUES (
+    'descartaveis', 'UPDATE', OLD.unidade_medida, OLD.nome, OLD.custo, OLD.quantidade_estoque, 
+    NEW.unidade_medida, NEW.nome, NEW.custo, NEW.quantidade_estoque
+);
+
+CREATE TRIGGER descartaveis_insert
+AFTER  INSERT ON descartaveis
+FOR EACH ROW
+INSERT INTO auditoria_estoque (
+	tabela_nome, operacao,
+    unidade_medida_nova, nome_novo, custo_novo, quantidade_estoque_novo
+    
+)VALUES(
+	'descartaveis', 'insert',
+	NEW.unidade_medida, NEW.nome, NEW.custo, NEW.quantidade_estoque
+    
+);
+
+CREATE TRIGGER descartaveis_delete
+BEFORE DELETE ON descartaveis
+FOR EACH ROW
+INSERT INTO auditoria_estoque(
+	tabela_nome, operacao, 
+    unidade_medida_antiga, nome_antigo, custo_antigo, quantidade_estoque_antigo
+	
+)VALUES(
+	'descartaveis','delete',
+    OLD.unidade_medida, OLD.nome, OLD.custo, OLD.quantidade_estoque
+    );
