@@ -50,7 +50,7 @@ Este projeto √© um sistema simples de gerenciamento de estoque com interface gr√
    ```bash
    git clone https://github.com/SEU_USUARIO/gerenciador-estoque.git
    cd gerenciador-estoque
-````
+   ```
 
 2. Crie um ambiente virtual (opcional, mas recomendado):
 
