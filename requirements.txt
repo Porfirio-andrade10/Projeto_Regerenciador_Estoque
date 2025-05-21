@@ -1,0 +1,12 @@
+# Interface Gráfica
+PySimpleGUI==4.60.5  # Versão estável mais recente (tkinter)
+
+# Banco de Dados
+mysql-connector-python==8.1.0  # Oficial MySQL (Oracle)
+# Alternativa popular:
+# pymysql==1.1.0  # Caso prefira um driver puro Python
+
+# Geração de PDF
+fpdf2==2.7.7  # Versão moderna do FPDF
+# Alternativa legado:
+# fpdf==1.7.2  # Versão original (não recomendado para novos projetos)
