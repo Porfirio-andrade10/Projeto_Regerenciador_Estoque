@@ -301,3 +301,58 @@ def Relatorio():
 
     pdf.ln()
     pdf.output('RELATORIO_ESTOQUE.pdf')
+
+
+def main_interface():
+
+
+    # Define o layout do menu
+    layout_menu = [
+        [sg.Text('MENU', font=('Helvetica', 16, 'bold'))],
+        [sg.Button('Cadastrar Novo Alimento', size=(50, 0))],
+        [sg.Button('Remover Alimento', size=(50, 0))],
+        [sg.Button('Atualizar ao Estoque', size=(50, 0))],
+        [sg.Button('Listar Alimentos', size=(50, 0))],
+        [sg.Button('Pesquisar Estoque', size=(50, 0))],
+        [sg.Button('Gerar PDF',key='gerar_pdf',size=(50,0))],
+        [sg.Button('Sair', key='-SAIR-', size=(50, 0))]
+    ]
+    # Cria uma janela para o menu
+    janela_menu = sg.Window('Gerenciador Estoque ', layout_menu, size=(500, 500), element_justification='center' )
+
+
+    # Loop principal para a interface do menu
+    while True:
+        event, values = janela_menu.read()
+        # Verifica se a janela foi fechada ou o botão 'Sair' foi pressionado
+        if event == sg.WIN_CLOSED or event == '-SAIR-':
+            break
+
+        # Trata os eventos dos botões do menu
+        elif event == 'Cadastrar Novo Alimento':
+            app = Add_estoque_Interface(Est)
+            app.executar()
+
+        
+        elif event == 'Atualizar ao Estoque':
+            app = Updd_estoque_Interface(Est)
+            app.executar()
+
+        elif event == 'Remover Alimento':
+            app = Rem_estoque_Interface(Est)
+            app.executar()
+
+        elif event == 'Listar Tabelas':
+            app = Updd_estoque_Interface(Est)
+            app.executar()
+
+        elif event == 'Pesquisar Receitas/Despesas':
+        # Chama a interface de pesquisa
+            app = Updd_estoque_Interface(Est)
+            app.executar()
+
+        elif event == 'gerar_pdf':
+            Relatorio()
+
+    # Fecha a janela do menu ao sair do loop
+    janela_menu.close()
