@@ -189,3 +189,115 @@ class Rem_estoque_Interface:
             elif event == "Listar Estoque":
                 nome_tabela = values["nome_tabela"]
                 self.listar_estoque(nome_tabela)
+
+def Relatorio():
+    
+    alimentos_nao_pereciveis= Est.listar_estoque("alimentos_nao_pereciveis")
+    
+    
+    tabela_alimentos_nao_pereciveis = [
+    ("iten", "Unidade", "Nome","Custo","Estoque","Data de validade")
+    ]
+    for x in alimentos_nao_pereciveis:
+        iten,unidade,nome,custo,estoque,data_validade = x
+        aux_iten=f"{iten}"
+        aux_cust =f"{custo}"  
+        aux_data_validade =f"{data_validade}".replace("-", "/")
+        aux_esto= f"{estoque}"
+        tabela_alimentos_nao_pereciveis.append((aux_iten,unidade,nome,aux_cust,aux_esto,aux_data_validade))
+
+
+    carne= Est.listar_estoque("carne")
+    
+    
+    tabela_carne = [
+    ("iten", "Unidade", "Nome","Custo","Estoque","Data de validade")
+    ]
+    for x in carne:
+        iten,unidade,nome,custo,estoque,data_validade = x
+        aux_iten=f"{iten}"
+        aux_cust =f"{custo}"  
+        aux_data_validade= f"{data_validade}".replace("-", "/")
+        aux_esto= f"{estoque}"
+        tabela_carne.append((aux_iten,unidade,nome,aux_cust,aux_esto,aux_data_validade))
+    
+    hortifruti= Est.listar_estoque("hortifruti")
+    
+
+    tabela_hortifruti = [
+    ("iten", "Unidade", "Nome","Custo","Estoque","Data de validade")
+    ]
+    for x in hortifruti:
+        iten,unidade,nome,custo,estoque,data_validade = x  
+        aux_iten=f"{iten}"
+        aux_cust =f"{custo}"  
+        aux_data_validade= f"{data_validade}".replace("-", "/")
+        aux_esto= f"{estoque}"
+        tabela_hortifruti.append((aux_iten,unidade,nome,aux_cust,aux_esto,aux_data_validade))
+
+
+    descartaveis= Est.listar_estoque("descartaveis")
+    
+    tabela_descartaveis = [
+    ("iten", "Unidade", "Nome","Custo","Estoque")
+    ]
+    for x in descartaveis:
+        iten,unidade,nome,custo,estoque = x
+        aux_iten=f"{iten}"
+        aux_cust =f"{custo}"  
+        aux_esto= f"{estoque}"
+        tabela_descartaveis.append((aux_iten,unidade,nome,aux_cust,aux_esto))
+    
+    
+    
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font('Times','', size=16)
+    pdf.cell(w=0, h=16, txt='UNIVERSIDADE ESTADUAL DA PARAÍBA', ln=True, align='C')
+    pdf.cell(w=0, h=16, txt='CENTRO DE CIÊNCIAS BIOLÓGICAS E SOCIAIS APLICADAS', ln=True, align='C')
+
+    pdf.set_font("Times", "B",size=14)
+    pdf.cell(w=0, h=14, txt='1. Géneros alimentícios  não perecíveis', ln=True, align='L')
+    pdf.set_font("Times","",size=10)
+    with pdf.table() as table:
+        for data_row in tabela_alimentos_nao_pereciveis:
+            row = table.row()
+            for datum in data_row:
+                row.cell(datum)
+    pdf.ln()
+
+    pdf.set_font("Times", "B",size=14)
+    pdf.cell(w=0, h=14, txt='1. Géneros alimentícios  carnes', ln=True, align='L')
+    pdf.set_font("Times","",size=10)
+    with pdf.table() as table:
+        for data_row in tabela_carne:
+            row = table.row()
+            for datum in data_row:
+                row.cell(datum)
+
+    pdf.ln()
+
+    pdf.set_font("Times", "B",size=14)
+    pdf.cell(w=0, h=16, txt='1. Géneros alimentícios  Hortifruti', ln=True, align='L')
+    pdf.set_font("Times","",size=10)
+    with pdf.table() as table:
+        for data_row in tabela_hortifruti:
+            row = table.row()
+            for datum in data_row:
+                row.cell(datum)
+    
+    pdf.ln()
+
+    pdf.set_font("Times", "B",size=14)
+    pdf.cell(w=0, h=16, txt='1. Géneros alimentícios  descartaveis', ln=True, align='L')
+    pdf.set_font("Times","",size=10)
+    with pdf.table() as table:
+        for data_row in tabela_descartaveis:
+            row = table.row()
+            for datum in data_row:
+                row.cell(datum)
+
+
+
+    pdf.ln()
+    pdf.output('RELATORIO_ESTOQUE.pdf')
