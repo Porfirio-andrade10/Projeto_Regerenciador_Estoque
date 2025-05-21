@@ -118,3 +118,74 @@ class Add_estoque_Interface:
             elif event == "Listar Estoque":
                 nome_tabela = values["nome_tabela"]
                 self.listar_estoque(nome_tabela)
+
+
+class Rem_estoque_Interface:
+
+    def __init__(self, estoque: Estoque):
+        self.estoque = estoque
+        # Layout da interface gráfica
+        self.nomes_tabelas = ["alimentos_nao_pereciveis", "carne", "hortifruti","descartaveis"]
+
+        self.layout = [
+            [sg.Text("Nome da tabela:"), sg.Combo(self.nomes_tabelas, key="nome_tabela", readonly=True)],
+            [sg.Text("Nome do Produto:"), sg.InputText(key="nome_produto")],
+            [sg.Multiline(size=(60, 5), key='-LISTAR_TABELA-')],
+            [sg.Button("Remover da tabela"), sg.Button("Listar Estoque")],
+            [sg.Button("Fechar")]
+        ]
+
+        # Criação da janela
+        self.window = sg.Window("Remover alimento Estoque", self.layout)
+
+    def remover_do_estoque(self, nome_tabela, nome_produto):
+        """
+        Função para adicionar um produto ao estoque no banco de dados.
+        """
+        if nome_produto:
+            # Corrigir chamada para usar self.estoque
+            self.estoque.remover_do_estoque(nome_tabela, nome_produto)
+            sg.popup("Produto Removido com sucesso!")
+        else:
+            sg.popup_error("Por favor, preencha todos os campos.")
+
+    def listar_estoque(self, nome_tabela):
+        """
+        Função para listar todos os produtos do estoque.
+        """
+        try:
+            # Consultar o estoque
+            resultado = self.estoque.listar_estoque(nome_tabela)
+            self.window['-LISTAR_TABELA-'].update('')
+
+            if resultado:
+                self.window['-LISTAR_TABELA-'].print([f"Nome: {row[2]}, Quantidade: {row[4]}, Data de validade : {row[5]}" for row in resultado])
+                
+            else:
+                sg.popup("Estoque", "Nenhum produto encontrado.")
+        except Exception as e:
+            sg.popup_error(f"Erro: {e}")
+
+    def fechar_app(self):
+        """
+        Função para fechar a aplicação.
+        """
+        self.window.close()
+
+    def executar(self):
+        """
+        Função principal que roda o loop de eventos da interface.
+        """
+        while True:
+            event, values = self.window.read()
+
+            if event == sg.WINDOW_CLOSED or event == "Fechar":
+                self.fechar_app()
+                break
+            elif event == "Remover da tabela":
+                nome_tabela = values["nome_tabela"]
+                nome_produto = values["nome_produto"]
+                self.remover_do_estoque(nome_tabela, nome_produto)
+            elif event == "Listar Estoque":
+                nome_tabela = values["nome_tabela"]
+                self.listar_estoque(nome_tabela)
