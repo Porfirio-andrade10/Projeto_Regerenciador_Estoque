@@ -356,3 +356,6 @@ def main_interface():
 
     # Fecha a janela do menu ao sair do loop
     janela_menu.close()
+
+if __name__ == "__main__":
+    main_interface()
