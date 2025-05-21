@@ -1,4 +1,3 @@
-```markdown
 # 🗃️ Gerenciador de Estoque
 
 Este projeto é um sistema simples de gerenciamento de estoque com interface gráfica em Python, integrando banco de dados MySQL, geração de relatórios em PDF e uma interface amigável construída com PySimpleGUI.
